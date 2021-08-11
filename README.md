@@ -6,7 +6,8 @@
 2. Pedro Henrique Dantas
 3. Vinícius Marini
 
-Histórias de usuários v1:
+# Histórias de usuários v1:
+
 Eu, como secretário, preciso emitir a definição curricular dos alunos a cada semestre para fornecer em caso de necessidade
 
 Eu, como usuário, preciso consultar os dados específicos de cada matéria para me certificar sobre ela
