@@ -8,10 +8,7 @@ public class SecretariaEntity {
       //busca
       disciplina.toString();
     }
-    public void atualizarDisciplina(){
-      Disciplina aux = //busca no bd
-
-    }
+    public void atualizarDisciplina(){}
     public void deletarDisciplina(){}
     public void criarAluno(){}
     public void recuperarAluno(){}
@@ -21,5 +18,5 @@ public class SecretariaEntity {
     public void recuperarProfessor(){}
     public void atualizarProfessor(){}
     public void deletarProfessor(){}
-    public void gerarCurriculo(){}
+
 }
