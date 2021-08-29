@@ -88,7 +88,7 @@ class Main {
   }
 
   public static void listarUsuarios() {
-    if (cursos.isEmpty())
+    if (usuarios.isEmpty())
       System.out.println("Nao ha nenhum usuario registrado");
     else
       for (UsuarioEntity usuario : usuarios)
@@ -102,7 +102,6 @@ class Main {
       for (CursoEntity curso : cursos)
         System.out.println(curso);
   }
-
 
   public static UsuarioEntity logar(Scanner scan) {
     UsuarioEntity usuario = null;
@@ -232,7 +231,6 @@ class Main {
     return opcao;
   }
 
-
   public static void mainAluno(Scanner scan) {
     int opcao = menuAluno(scan);
 
@@ -290,7 +288,7 @@ class Main {
       switch (opcao) {
         case 1:
           UsuarioEntity usuario = logar(scan);
-          if(usuario instanceof ProfessorEntity)
+          if (usuario instanceof ProfessorEntity)
             mainProfessor(scan);
           else
             mainAluno(scan);
