@@ -27,8 +27,6 @@ Eu, como secretário, preciso disponibilizar um período de matrícula para gara
 
 Eu, aluno, preciso poder cancelar a matrícula recém realizada, para me retificar de minhas ações
 
-Eu, como professor, preciso saber se darei aula no próximo semestre, baseado no histórico da disciplina, para garantir o calendário acadêmico
-
 Eu, como secretário, preciso garantir o número máximo de alunos em uma disciplina no mesmo semestre, para garantir as normas acadêmicas
 
 Eu, como aluno, preciso ser cobrado pelas disciplinas que estou cursando neste semestre para pagá-las
