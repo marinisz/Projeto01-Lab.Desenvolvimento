@@ -23,15 +23,9 @@ Eu, como aluno, preciso me matricular nas disciplinas optativas para realizar o 
 
 Eu, como secretário, preciso certificar que o aluno esteja matriculado em um limite de discplinas para cumprir com carga horária
 
-Eu, como secretário, preciso disponibilizar um período de matrícula para garantir o calendário acadêmico
-
-Eu, aluno, preciso poder cancelar a matrícula recém realizada, para me retificar de minhas ações
-
-Eu, como secretário, preciso garantir o número máximo de alunos em uma disciplina no mesmo semestre, para garantir as normas acadêmicas
+Eu, aluno, consigo cancelar a matrícula realizada.
 
 Eu, como aluno, preciso ser cobrado pelas disciplinas que estou cursando neste semestre para pagá-las
-
-Eu, como aluno, preciso ser notificado sobre minhas matrículas para confirmar minhas matérias
 
 Eu, professor, preciso acessar o registro de matrícula para visualizar os alunos matriculados
 
