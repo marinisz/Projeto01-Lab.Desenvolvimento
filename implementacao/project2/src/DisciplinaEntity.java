@@ -39,7 +39,7 @@ public class DisciplinaEntity  implements Serializable {
 
     @Override
     public String toString() {
-        return "Nome: "+this.getNome()+"\n Quantidade de horas: "+this.getQtdHoras()+"\n Opcional"+this.isOpcional();
+        return "Nome: "+this.getNome()+"\n Quantidade de horas: "+this.getQtdHoras()+"\n Opcional: "+this.isOpcional();
     }
 
 }

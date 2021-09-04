@@ -1,20 +1,25 @@
 import java.util.*;
 
 class Main {
+    private static UsuarioEntity usuarioAtual;
     private static ArrayList<UsuarioEntity> usuarios;
     private static ArrayList<CursoEntity> cursos;
     private static ArrayList<DisciplinaEntity> disciplinas;
+    private static ArrayList<TurmaEntity> turmas;
     private static FS<UsuarioEntity> fsUsuarios;
     private static FS<CursoEntity> fsCursos;
-    private static FS<DisciplinaEntity> fsDisciplina;
+    private static FS<DisciplinaEntity> fsDisciplinas;
+    private static FS<TurmaEntity> fsTurmas;
 
     static {
         usuarios = new ArrayList<>();
         cursos = new ArrayList<>();
         disciplinas = new ArrayList<>();
+        turmas = new ArrayList<>();
         fsUsuarios = new FS<>();
         fsCursos = new FS<>();
-        fsDisciplina = new FS<>();
+        fsDisciplinas = new FS<>();
+        fsTurmas = new FS<>();
     }
 
     static void pausa(Scanner teclado) {
@@ -45,19 +50,6 @@ class Main {
             return usuarioOpt.get();
         else
             throw new UsuarionaoEncontrado(matricula);
-    }
-
-    public static void matricularDisciplina(Scanner scan) throws DisciplinasExcedidas {
-        System.out.println("Digite o nome da disciplina que deseja se matricular: ");
-        String disciplina = scan.nextLine();
-
-        System.out.println("Para confirmar matrícula como obriagótira, digite 1.\nCaso deseje matricular como opcional, 2.");
-        int obrigatoriedade = scan.nextInt();
-        while (obrigatoriedade != 1 || obrigatoriedade != 2){
-            obrigatoriedade = scan.nextInt();
-        }
-
-        throw new DisciplinasExcedidas();
     }
 
     public static void cadastrarCurso(Scanner scan) {
@@ -93,9 +85,13 @@ class Main {
         System.out.println("Digite a quantidade de horas:");
         int qtdHoras = scan.nextInt();
 
-        disciplinas.add(new DisciplinaEntity(qtdHoras, obrigatoriedadeBool, nomeDisciplina));
-        fsDisciplina.escreveArquivo(disciplinas, "disciplinas.bin");
+        DisciplinaEntity disciplina = new DisciplinaEntity(qtdHoras, obrigatoriedadeBool, nomeDisciplina);
 
+        disciplinas.add(disciplina);
+        fsDisciplinas.escreveArquivo(disciplinas, "disciplinas.bin");
+
+        TurmaEntity turma = new TurmaEntity(disciplina);
+        turmas.add(turma);
     }
 
     public static void listarDisciplinas(){
@@ -104,6 +100,31 @@ class Main {
         else
             for (DisciplinaEntity disciplina : disciplinas)
                 System.out.println(disciplina);
+    }
+
+    public static void matricularDisciplina(Scanner scan) {
+        if(disciplinas.isEmpty()){
+            System.out.println("Ops! Parece que não há disciplina disponível no momento.");
+        }
+        else {
+            System.out.println("Digite o nome da disciplina que deseja se matricular: ");
+            String disciplina = scan.nextLine();
+            Optional<TurmaEntity> turmaOpt = turmas.stream().filter(turmaNome -> turmaNome.
+                                                                    getDisciplina().
+                                                                    getNome().
+                                                                    equals(disciplina)).
+                                                                    findAny();
+            if (turmaOpt.isPresent()){
+                int i = 0;
+                while(!turmas.get(i).getDisciplina().getNome().equals(disciplina)){
+                    i++;
+                }
+                turmas.get(i).addAluno(usuarioAtual);
+                fsTurmas.escreveArquivo(turmas, "turmas.bin");
+            }
+            else
+                matricularDisciplina(scan);
+        }
     }
 
     public static void cadastrarUsuario(Scanner scan) {
@@ -165,7 +186,7 @@ class Main {
         } catch (Exception e) {
             System.out.println(e);
         }
-
+        usuarioAtual = usuario;
         return usuario;
     }
 
@@ -288,11 +309,7 @@ class Main {
             switch (opcao) {
                 case 1:
                     System.out.println("Matricular Disciplina");
-                    try {
-                        matricularDisciplina(scan);
-                    } catch (DisciplinasExcedidas e) {
-                        e.printStackTrace();
-                    }
+                    matricularDisciplina(scan);
                     break;
                 case 2:
                     System.out.println("Cancelar Disciplina");

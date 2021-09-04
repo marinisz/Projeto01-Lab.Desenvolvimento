@@ -1,10 +1,11 @@
 import java.io.Serializable;
 
 public class TurmaEntity implements Serializable{
-    private String id;
+    private int id;
+    protected static int QTD_TURMAS = 0;
     private DisciplinaEntity disciplina;
     private ProfessorEntity professor;
-    private AlunoEntity[] alunos;
+    private UsuarioEntity[] alunos;
     private static final int QTD_MAXIMA;
     private static final int QTD_MINIMA;
     private int qtdAlunos;
@@ -15,16 +16,17 @@ public class TurmaEntity implements Serializable{
     }
 
     //Construtor
-    public TurmaEntity(DisciplinaEntity disciplina, ProfessorEntity professor) {
+    public TurmaEntity(DisciplinaEntity disciplina) {
+        QTD_TURMAS += 1;
+        this.id = QTD_TURMAS;
         this.disciplina = disciplina;
-        this.professor = professor;
         this.alunos = new AlunoEntity[QTD_MAXIMA];
         this.qtdAlunos = 0;
     }
 
     //getter and setters
 
-    public void addAluno(AlunoEntity aluno) {
+    public void addAluno(UsuarioEntity aluno) {
         this.alunos[qtdAlunos] = aluno;
         this.qtdAlunos += 1;
     }
@@ -45,11 +47,11 @@ public class TurmaEntity implements Serializable{
         return professor;
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -62,7 +64,7 @@ public class TurmaEntity implements Serializable{
     }
 
     public void imprimirAlunos() {
-        for (AlunoEntity aluno : this.alunos) {
+        for (UsuarioEntity aluno : this.alunos) {
             System.out.println(aluno);
         }
     }
