@@ -17,10 +17,10 @@ public class AlunoEntity extends UsuarioEntity {
 
     //metodos
     public void cancelarMatricula(){
-      //apaga matricula do bd
+        //apaga matricula do bd
     }
     public void matriculaDisciplina(){
-      //insere matricula no bd
+        //insere matricula no bd
     }
     public String toString() {
         return "Aluno: "+this.getNome()+"\n Matricula: "+this.getMatricula()+"\n" + this.getCurso();

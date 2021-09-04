@@ -21,3 +21,7 @@ class FalhaNoLogin extends Exception {
         super("Credenciais invalidas");
     }
 }
+
+class DisciplinasExcedidas extends Exception {
+    DisciplinasExcedidas() { super("Ops! Número de matrículas nesta modalidade excedido."); }
+}

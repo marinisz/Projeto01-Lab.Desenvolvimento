@@ -1,4 +1,6 @@
-public class DisciplinaEntity {
+import java.io.Serializable;
+
+public class DisciplinaEntity  implements Serializable {
     private int qtdHoras;
     private boolean opcional;
     private String nome;
@@ -35,7 +37,9 @@ public class DisciplinaEntity {
         this.nome = nome;
     }
 
+    @Override
     public String toString() {
         return "Nome: "+this.getNome()+"\n Quantidade de horas: "+this.getQtdHoras()+"\n Opcional"+this.isOpcional();
     }
+
 }

@@ -1,4 +1,4 @@
-/** 
+/**
  * MIT License
  *
  * Copyright(c) 2021 João Caram <caram@pucminas.br>
@@ -22,25 +22,25 @@
  * SOFTWARE.
  */
 
- /**
-  * Classe Data para uso próprio.
-  */
+/**
+ * Classe Data para uso próprio.
+ */
 public class Data{
     private static final Data MINDATA;
     private static Data maxData;
-    
+
     /** Constante para validação de dias do mês */
     private static final int[] DIASDOMES = {0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
-    
+
     /** atributos usuais de uma data */
     private int dia, mes, ano;
-    
-    
+
+
     static{
         MINDATA = new Data(true);
         maxData = MINDATA;
-    }       
-    
+    }
+
 
     /**
      * Construtor privado para iniciar a data mínima
@@ -55,7 +55,7 @@ public class Data{
             this.dia = aux.dia;
             this.mes = aux.mes;
             this.ano = aux.ano;
-        } 
+        }
     }
     /**
      * @return the dia
@@ -81,8 +81,8 @@ public class Data{
 
     /**
      * Construtor padrão. Retorna data sempre válida
-     * @param d Dia 
-     * @param m Mês 
+     * @param d Dia
+     * @param m Mês
      * @param a Ano
      */
     public Data(int d, int m, int a){
@@ -95,12 +95,12 @@ public class Data{
             this.ano = MINDATA.getAno();
         }
         if (this.maisRecente(maxData)){
-              maxData.dia = this.dia;
-              maxData.mes = this.mes;
-              maxData.ano = this.ano;
+            maxData.dia = this.dia;
+            maxData.mes = this.mes;
+            maxData.ano = this.ano;
         }
     }
-    
+
     /**
      * Construtor vazio. Retorna data com 1 dia a mais que a data mais avançada já criada.
      */
@@ -109,9 +109,9 @@ public class Data{
         this.dia = maxData.dia;
         this.mes = maxData.mes;
         this.ano = maxData.ano;
-    }        
-    
-    
+    }
+
+
     /**
      * Retorna se o ano é bissexto.
      *  Para regras do ano bissexto:
@@ -120,11 +120,11 @@ public class Data{
      * @return V/F para ano bissexto
      */
     public boolean anoBissexto(){
-    
-        if(this.ano%100==0) 
-              return ((this.ano%400)==0);         //ano divisível por 400 --> bissexto
-        else 
-              return((this.ano%4)==0);              
+
+        if(this.ano%100==0)
+            return ((this.ano%400)==0);         //ano divisível por 400 --> bissexto
+        else
+            return((this.ano%4)==0);
     }
 
     /**
@@ -137,16 +137,16 @@ public class Data{
         if(this.ano<1900)
             resposta = false;
         else{
-           if (this.mes < 1 || this.mes > 12)                           //mês<1 ou mês>12 --> data inválida
-               resposta = false;
-           else { 
-                   if (this.anoBissexto()) //senão, caso de 29/02 em ano bissexto --> data válida
-                          DIASDOMES[2] = 29;
-                   if (this.dia > DIASDOMES[this.mes])                //senao, verifica validade de acordo com o mês atual
-                           resposta = false;
-                   DIASDOMES[2] = 28;
-                }
-        }                       
+            if (this.mes < 1 || this.mes > 12)                           //mês<1 ou mês>12 --> data inválida
+                resposta = false;
+            else {
+                if (this.anoBissexto()) //senão, caso de 29/02 em ano bissexto --> data válida
+                    DIASDOMES[2] = 29;
+                if (this.dia > DIASDOMES[this.mes])                //senao, verifica validade de acordo com o mês atual
+                    resposta = false;
+                DIASDOMES[2] = 28;
+            }
+        }
         return resposta;    //retorna a resposta obtida
     }
 
@@ -164,9 +164,9 @@ public class Data{
 
         while (aux.dia > DIASDOMES[aux.mes]){     //enquanto os dias ultrapassam o limite de dias do mês atual... ajustar
 
-            aux.dia = aux.dia - DIASDOMES[aux.mes]; // desconta a quantidade de dias do mês       
+            aux.dia = aux.dia - DIASDOMES[aux.mes]; // desconta a quantidade de dias do mês
             aux.mes++; //avança o mês
-            
+
             if (aux.mes > 12)      //se passar de 12 meses...
             {
                 aux.mes = aux.mes - 12;       //desconta-se 1 ano
@@ -184,36 +184,36 @@ public class Data{
      * @return V/F caso esta data seja mais recente (avançada)
      */
     public boolean maisRecente(Data outra){
-       
-        if(this.ano > outra.ano) 
-              return true;
+
+        if(this.ano > outra.ano)
+            return true;
         else if(this.ano < outra.ano)
-              return false;
-        
+            return false;
+
         if(this.mes > outra.mes)
-              return true;
+            return true;
         else if(this.mes < outra.mes)
-              return false;
-              
+            return false;
+
         if(this.dia > outra.dia)
-              return true;
-        else 
-              return false;
-    }		
-    
+            return true;
+        else
+            return false;
+    }
+
     @Override
     /**
      * Data formatada com DD/MM/AAAA
      */
     public String toString(){
-        
+
         return (String.format("%02d",this.dia)+ "/" + String.format("%02d",this.mes)+ "/" + String.format("%4d",this.ano));
     }
 
-    
 
 
 
-    
+
+
 }
 

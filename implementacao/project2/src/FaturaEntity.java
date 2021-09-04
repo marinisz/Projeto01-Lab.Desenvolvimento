@@ -4,7 +4,7 @@ public class FaturaEntity {
     private float valor;
     private int matricula;
     private Date dataPagamento;
-    
+
     //getter and setter
 
     public float getValor() {
