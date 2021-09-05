@@ -23,5 +23,5 @@ class FalhaNoLogin extends Exception {
 }
 
 class DisciplinasExcedidas extends Exception {
-    DisciplinasExcedidas() { super("Ops! Número de matrículas nesta modalidade excedido."); }
+    DisciplinasExcedidas() { super("Número de matrículas nesta modalidade excedido."); }
 }

@@ -73,19 +73,19 @@ class Main {
 
         System.out.print("Digite 1 para disciplina obrigatória.\n2 para opcional: ");
         int obrigatoriedade = scan.nextInt();
-        boolean obrigatoriedadeBool = false;
+        boolean disciplinaOpcional = false;
         while (obrigatoriedade != 1 && obrigatoriedade != 2){
             System.out.println("Digite novamente, apenas 1 ou 2: ");
             obrigatoriedade = scan.nextInt();
         }
-        if(obrigatoriedade == 1){
-            obrigatoriedadeBool = true;
+        if(obrigatoriedade == 2){
+            disciplinaOpcional = true;
         }
 
         System.out.println("Digite a quantidade de horas:");
         int qtdHoras = scan.nextInt();
 
-        DisciplinaEntity disciplina = new DisciplinaEntity(qtdHoras, obrigatoriedadeBool, nomeDisciplina);
+        DisciplinaEntity disciplina = new DisciplinaEntity(qtdHoras, disciplinaOpcional, nomeDisciplina);
 
         disciplinas.add(disciplina);
         fsDisciplinas.escreveArquivo(disciplinas, "disciplinas.bin");
@@ -114,17 +114,46 @@ class Main {
                                                                     getNome().
                                                                     equals(disciplina)).
                                                                     findAny();
+
             if (turmaOpt.isPresent()){
                 int i = 0;
                 while(!turmas.get(i).getDisciplina().getNome().equals(disciplina)){
                     i++;
                 }
-                turmas.get(i).addAluno(usuarioAtual);
-                fsTurmas.escreveArquivo(turmas, "turmas.bin");
+
+                try {
+                    validarMatricula(turmas.get(i).getDisciplina());
+
+                    if(turmas.get(i).getDisciplina().isOpcional())
+                        usuarioAtual.addOpcional();
+                    else
+                        usuarioAtual.addObrigatoria();
+
+                    turmas.get(i).addAluno(usuarioAtual);
+                    fsTurmas.escreveArquivo(turmas, "turmas.bin");
+
+                }
+                catch (DisciplinasExcedidas e) {
+
+                }
+
+
             }
             else
                 matricularDisciplina(scan);
         }
+    }
+
+    public static void validarMatricula(DisciplinaEntity disciplina) throws DisciplinasExcedidas {
+        if(!disciplina.isOpcional()){
+            if(usuarioAtual.getDisciplinasObrigatorias() == 4)
+                throw new DisciplinasExcedidas();
+        }
+        else{
+            if(usuarioAtual.getDisciplinasOpcionais() == 2)
+                throw new DisciplinasExcedidas();
+        }
+
     }
 
     public static void cadastrarUsuario(Scanner scan) {

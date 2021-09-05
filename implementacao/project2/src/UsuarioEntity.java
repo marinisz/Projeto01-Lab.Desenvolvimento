@@ -7,6 +7,9 @@ public abstract class UsuarioEntity implements Serializable{
     private String nascimento;
     private String senha;
 
+    private int DisciplinasObrigatorias = 0;
+    private int DisciplinasOpcionais = 0;
+
     //Construtor
     UsuarioEntity(String nome, String senha, String nascimento){
         QTD_USUARIO += 1;
@@ -14,6 +17,8 @@ public abstract class UsuarioEntity implements Serializable{
         this.nome=nome;
         this.nascimento=nascimento;
         this.senha=senha;
+        this.DisciplinasOpcionais = 0;
+        this.DisciplinasOpcionais = 0;
     }
 
     //getter and setter
@@ -45,6 +50,12 @@ public abstract class UsuarioEntity implements Serializable{
     public void setSenha(String senha) {
         this.senha = senha;
     }
+
+    public void addObrigatoria(){ this.DisciplinasObrigatorias++; }
+    public int getDisciplinasObrigatorias() { return this.DisciplinasObrigatorias; }
+
+    public void addOpcional(){ this.DisciplinasOpcionais++; }
+    public int getDisciplinasOpcionais(){ return this.DisciplinasOpcionais; }
 
     @Override
     public String toString() {
