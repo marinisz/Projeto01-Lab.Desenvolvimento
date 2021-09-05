@@ -1,4 +1,5 @@
 import java.io.Serializable;
+import java.util.ArrayList;
 
 public abstract class UsuarioEntity implements Serializable{
     protected static int QTD_USUARIO = 0;
@@ -6,6 +7,9 @@ public abstract class UsuarioEntity implements Serializable{
     private String nome;
     private String nascimento;
     private String senha;
+
+    private ArrayList<DisciplinaEntity> disciplinas;
+    private int mensalidade;
 
     private int DisciplinasObrigatorias = 0;
     private int DisciplinasOpcionais = 0;
@@ -19,6 +23,8 @@ public abstract class UsuarioEntity implements Serializable{
         this.senha=senha;
         this.DisciplinasOpcionais = 0;
         this.DisciplinasOpcionais = 0;
+        this.disciplinas = new ArrayList<DisciplinaEntity>();
+        this.mensalidade = 0;
     }
 
     //getter and setter
@@ -56,6 +62,15 @@ public abstract class UsuarioEntity implements Serializable{
 
     public void addOpcional(){ this.DisciplinasOpcionais++; }
     public int getDisciplinasOpcionais(){ return this.DisciplinasOpcionais; }
+
+    public void addDisciplina(DisciplinaEntity novaDisciplina) {
+        this.disciplinas.add(novaDisciplina);
+        this.mensalidade += novaDisciplina.getQtdHoras()*100;
+    }
+
+    public int getMensalidade() { return this.mensalidade; }
+
+    public ArrayList<DisciplinaEntity> getDisciplinas() { return this.disciplinas; }
 
     @Override
     public String toString() {

@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 public class AlunoEntity extends UsuarioEntity {
     private CursoEntity curso;
 

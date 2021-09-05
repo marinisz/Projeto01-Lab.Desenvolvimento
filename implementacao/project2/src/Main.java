@@ -120,7 +120,6 @@ class Main {
                 while(!turmas.get(i).getDisciplina().getNome().equals(disciplina)){
                     i++;
                 }
-
                 try {
                     validarMatricula(turmas.get(i).getDisciplina());
 
@@ -132,12 +131,9 @@ class Main {
                     turmas.get(i).addAluno(usuarioAtual);
                     fsTurmas.escreveArquivo(turmas, "turmas.bin");
 
+                    usuarioAtual.addDisciplina(turmas.get(i).getDisciplina());
                 }
-                catch (DisciplinasExcedidas e) {
-
-                }
-
-
+                catch (DisciplinasExcedidas e) { }
             }
             else
                 matricularDisciplina(scan);
@@ -153,7 +149,19 @@ class Main {
             if(usuarioAtual.getDisciplinasOpcionais() == 2)
                 throw new DisciplinasExcedidas();
         }
+    }
 
+    public static void exibirNotificacoes(){
+        var discplinas = usuarioAtual.getDisciplinas();
+        if(discplinas.size()>=1) {
+            System.out.println("Suas discplinas são:");
+            for (int i = 0; i < disciplinas.size(); i++) {
+                System.out.println(discplinas.get(i).getNome());
+            }
+            System.out.println("O valor atual da mensalidade é: " + usuarioAtual.getMensalidade());
+        }
+        else
+            System.out.println("Parece que não há nada por aqui!");
     }
 
     public static void cadastrarUsuario(Scanner scan) {
@@ -244,6 +252,7 @@ class Main {
         System.out.println("____________Menu Aluno____________");
         System.out.println("1 - Matricular disciplina");
         System.out.println("2 - Cancelar disciplina");
+        System.out.println("3 - Exibir notificações");
         System.out.println("0 - Logout");
         System.out.print("Opção: ");
 
@@ -343,6 +352,10 @@ class Main {
                 case 2:
                     System.out.println("Cancelar Disciplina");
                     pausa(scan);
+                    break;
+                case 3:
+                    System.out.println("Exibir notificações");
+                    exibirNotificacoes();
                     break;
             }
             opcao = menuAluno(scan);
