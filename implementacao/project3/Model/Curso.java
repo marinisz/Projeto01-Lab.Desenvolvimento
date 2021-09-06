@@ -38,10 +38,12 @@ public class Curso implements Serializable {
 
     public void removerDisciplina(Disciplina disciplina) {
         this.disciplinas.remove(disciplina);
+        Sistema.getInstance().atualizarCurso();
     }
 
     public void addDisciplina(Disciplina disciplina) {
         this.disciplinas.add(disciplina);
+        Sistema.getInstance().atualizarCurso();
     }
 
     public String getNome() {
@@ -50,6 +52,7 @@ public class Curso implements Serializable {
 
     public void setNome(String nome) {
         this.nome = nome;
+        Sistema.getInstance().atualizarCurso();
     }
 
     public int getNumCreditos() {
@@ -58,10 +61,12 @@ public class Curso implements Serializable {
 
     public void setNumCreditos(int numCreditos) {
         this.numCreditos = numCreditos;
+        Sistema.getInstance().atualizarCurso();
     }
 
     public void setCurriculo(Curriculo curriculo) {
         this.curriculo = curriculo;
+        Sistema.getInstance().atualizarCurso();
     }
 
     public Curriculo getCurriculo() {

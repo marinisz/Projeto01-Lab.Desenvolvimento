@@ -114,7 +114,11 @@ public class Curriculo implements Matriculavel, Gerenciavel, Visualizavel, Seria
         if (disc == null || disc.getSituacao() == DisciplinaEnum.APROVADA) {
             return false;
         } else
-            return this.disciplinas.remove(disc);
+            {
+                Boolean t = this.disciplinas.remove(disc);
+                Sistema.getInstance().atualizarCurso();
+                return t;
+            }
     }
 
     public ArrayList<Disciplina> getDisciplinas() {
@@ -147,6 +151,7 @@ public class Curriculo implements Matriculavel, Gerenciavel, Visualizavel, Seria
             }
 
             this.periodoDeMatricula = false;
+            Sistema.getInstance().atualizarCurso();
         }
     }
 
