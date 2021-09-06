@@ -2,20 +2,18 @@ package Model;
 
 import java.io.Serializable;
 
+import Utils.Pessoa;
+
 public abstract class Usuario implements Serializable{
     protected static int QTD_USUARIO = 0;
     private int matricula;
-    private String nome;
-    private String nascimento;
-    private String senha;
+    private Pessoa pessoa;
 
     //Construtor
-    Usuario(String nome, String senha, String nascimento){
+    Usuario(Pessoa pessoa){
         QTD_USUARIO += 1;
         this.matricula = QTD_USUARIO;
-        this.nome=nome;
-        this.nascimento=nascimento;
-        this.senha=senha;
+        this.pessoa = pessoa;
     }
 
     //getter and setter
@@ -24,36 +22,24 @@ public abstract class Usuario implements Serializable{
         return matricula;
     }
 
-    public String getNome() {
-        return nome;
+    public Pessoa getPessoa() {
+        return pessoa;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
-    public String getNascimento() {
-        return nascimento;
-    }
-
-    public void setNascimento(String nascimento) {
-        this.nascimento = nascimento;
-    }
-
-    public String getSenha() {
-        return senha;
-    }
-
-    public void setSenha(String senha) {
-        this.senha = senha;
+    public void listarUsuario() {
+        Sistema sistema = Sistema.getInstance();
+        try {
+            sistema.listarUsuarios();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
     }
 
     @Override
     public String toString() {
         return "Papel: " + this.getClass().getSimpleName() +
-                "\n Nome: " + this.nome +
-                "\n Matricula: " + this.matricula +
-                "\n Senha : " + this.senha;
+                "\n\tMatricula: " + this.matricula +
+                "\n\t" + this.pessoa.toString();
 
     }
 }

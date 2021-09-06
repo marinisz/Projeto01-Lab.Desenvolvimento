@@ -6,14 +6,20 @@ import Exceptions.ObjetoNaoEncontrado;
 import java.util.ArrayList;
 import java.util.Optional;
 
-public class SistemaModel implements Buscavel {
+public class Sistema implements Search {
+    private Usuario usuarioAtual;
+    private Curriculo curriculo;
     private ArrayList<Usuario> usuarios;
     private ArrayList<Curso> cursos;
-    private FS<Usuario> fsUsuarios;
-    private FS<Curso> fsCursos;
-    private static SistemaModel instancia;
+    public static final FS<Usuario> fsUsuarios;
+    public static final FS<Curso> fsCursos;
+    private static Sistema instancia;
 
-    private SistemaModel() {
+    static {
+        fsUsuarios = new FS<>();
+        fsCursos = new FS<>();
+    }
+    private Sistema() {
         this.connect();
         usuarios = fsUsuarios.ler("./DB/usuarios.bin");
         cursos = fsCursos.ler("./DB/cursos.bin");
@@ -23,36 +29,34 @@ public class SistemaModel implements Buscavel {
     private void connect() {
         usuarios = new ArrayList<>();
         cursos = new ArrayList<>();
-        fsUsuarios = new FS<>();
-        fsCursos = new FS<>();
     }
 
-    public static SistemaModel getInstance() {
-        if(SistemaModel.instancia == null)
-            SistemaModel.instancia = new SistemaModel();
+    public static Sistema getInstance() {
+        if (Sistema.instancia == null)
+            Sistema.instancia = new Sistema();
 
-        return SistemaModel.instancia;
+        return Sistema.instancia;
     }
 
     @Override
-    public Usuario buscarPelaMatricula(int matricula) throws ObjetoNaoEncontrado {
+    public Usuario buscarUsuarioPelaMatricula(int matricula) throws ObjetoNaoEncontrado {
         Optional<Usuario> usuarioOpt = usuarios.stream().filter(usuario -> usuario.getMatricula() == matricula)
                 .findAny();
 
         if (usuarioOpt.isPresent())
             return usuarioOpt.get();
         else
-            throw new ObjetoNaoEncontrado(matricula);
+            throw new ObjetoNaoEncontrado("Usuario", matricula);
     }
 
     @Override
-    public Curso buscarPeloNome(String nome)throws ObjetoNaoEncontrado {
+    public Curso buscarCursoPeloNome(String nome) throws ObjetoNaoEncontrado {
         Optional<Curso> cursosOpt = cursos.stream().filter(curso -> curso.getNome().equals(nome)).findAny();
 
         if (cursosOpt.isPresent())
             return cursosOpt.get();
         else
-            throw new ObjetoNaoEncontrado(nome);
+            throw new ObjetoNaoEncontrado("Curso", nome);
     }
 
     public void listarCurso() {
@@ -72,12 +76,42 @@ public class SistemaModel implements Buscavel {
     }
 
     public void cadastrarUsuario(Usuario usuario) {
-        if(this.usuarios.add(usuario))
+        if (this.usuarios.add(usuario))
             fsUsuarios.escrever("DB/usuarios.bin", usuarios);
     }
 
     public void cadastrarCurso(Curso curso) {
-        if(this.cursos.add(curso))
+        if (this.cursos.add(curso))
             fsCursos.escrever("DB/cursos.bin", cursos);
+    }
+
+    public void setCurriculo(Curriculo curriculo) {
+        this.curriculo = curriculo;
+    }
+
+    public Curriculo getCurriculo() {
+        return curriculo;
+    }
+
+    public void setUsuarioAtual(Usuario usuarioAtual) {
+        this.usuarioAtual = usuarioAtual;
+    }
+
+    public Usuario getUsuarioAtual() {
+        return this.usuarioAtual;
+    }
+
+    public void removerUsuario(Usuario usuario) {
+        if(this.usuarios.remove(usuario))
+            fsUsuarios.escrever("DB/usuarios.bin", usuarios);
+    }
+
+    public void removerCurso(Curso curso) {
+        if(this.cursos.remove(curso))
+            fsCursos.escrever("DB/cursos.bin", cursos);
+    }
+
+    public void atualizarCurso() {
+        fsCursos.escrever("DB/cursos.bin", cursos);
     }
 }

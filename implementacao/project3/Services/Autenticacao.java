@@ -1,18 +1,18 @@
 package Services;
 
 import Exceptions.FalhaNoLogin;
-import Model.SistemaModel;
+import Model.Sistema;
 import Model.Usuario;
 
 public class Autenticacao {
 
-    public Usuario logar(int matricula, String senha) {
+    public Usuario login(int matricula, String senha) {
         Usuario usuario = null;
-        SistemaModel sistemaModel = SistemaModel.getInstance();
+        Sistema sistemaModel = Sistema.getInstance();
         try {
-            usuario = sistemaModel.buscarPelaMatricula(matricula);
+            usuario = sistemaModel.buscarUsuarioPelaMatricula(matricula);
 
-            if (!verificarSenha(usuario.getSenha(), senha)) {
+            if (!verificarSenha(usuario.getPessoa().getSenha(), senha)) {
                 throw new FalhaNoLogin();
             }
         } catch (Exception e) {

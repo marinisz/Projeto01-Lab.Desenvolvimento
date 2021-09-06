@@ -3,14 +3,18 @@ package Model;
 import java.io.Serializable;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
+
+import Exceptions.ObjetoNaoEncontrado;
 
 public class Curso implements Serializable {
     private Set<Disciplina> disciplinas;
+    private Curriculo curriculo;
     private String nome;
     private int numCreditos;
 
-    //Construtor
+    // Construtor
 
     public Curso(String nome, int numCreditos) {
         this.disciplinas = new HashSet<>();
@@ -18,13 +22,21 @@ public class Curso implements Serializable {
         this.numCreditos = numCreditos;
     }
 
-    //getters and setters
+    public Disciplina buscarDisciplinaPeloNome(String nome) throws ObjetoNaoEncontrado {
+        Optional<Disciplina> disciplinaOpt = disciplinas.stream()
+                .filter(disciplina -> disciplina.getNome().equals(nome)).findAny();
+
+        if (disciplinaOpt.isPresent())
+            return disciplinaOpt.get();
+        else
+            throw new ObjetoNaoEncontrado("Disciplina", nome);
+    }
 
     public Set<Disciplina> getDisciplinas() {
         return Collections.unmodifiableSet(this.disciplinas);
     }
 
-    public void removeDisciplina(Disciplina disciplina) {
+    public void removerDisciplina(Disciplina disciplina) {
         this.disciplinas.remove(disciplina);
     }
 
@@ -48,12 +60,19 @@ public class Curso implements Serializable {
         this.numCreditos = numCreditos;
     }
 
+    public void setCurriculo(Curriculo curriculo) {
+        this.curriculo = curriculo;
+    }
+
+    public Curriculo getCurriculo() {
+        return curriculo;
+    }
+
     @Override
     public String toString() {
-        return "Curso={" +
-                "disciplinas=" + disciplinas +
-                ", nome='" + nome + '\'' +
-                ", numCreditos=" + numCreditos +
-                '}';
+        return "Curso= " + nome + 
+            "\nDisciplinas=" + disciplinas +
+            "\nNumCreditos=" + numCreditos +
+            "\nCurriculo: " + curriculo;
     }
 }

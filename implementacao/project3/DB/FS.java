@@ -3,7 +3,7 @@ package DB;
 import java.io.*;
 import java.util.ArrayList;
 
-public class FS<T> implements Model<T> {
+public class FS<T> implements DB<T> {
     public ArrayList<T> ler(String caminho) {
         ArrayList<T> lista = new ArrayList<>();
         try {

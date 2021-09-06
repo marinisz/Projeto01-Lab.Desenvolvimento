@@ -1,96 +1,140 @@
+import Controller.*;
 import Model.*;
 import View.*;
 
-import java.util.*;
-
 public class App {
+  private static View view;
 
-  static void pausa(Scanner teclado) {
-    System.out.println("Enter para continuar.");
-    teclado.nextLine();
-  }
-
-  public static void alunoRouter() {
-    AlunoViewer viewer = new AlunoViewer();
-    int opcao = viewer.menu();
+  private static void alunoRouter() {
+    int opcao = view.renderAluno();
 
     while (opcao != 0) {
       switch (opcao) {
         case 1:
-          System.out.println("Matricular Disciplina");
+          AlunoController.matricular();
           break;
         case 2:
-          System.out.println("Cancelar Disciplina");
+          AlunoController.cancelar();
           break;
       }
-      opcao = viewer.menu();
+      opcao = view.renderAluno();
     }
   }
 
   public static void professorRouter() {
-    ProfessorViewer viewer = new ProfessorViewer();
-    int opcao = viewer.menu();
+    int opcao = view.renderProfessor();
+    while (opcao != 0) {
+      switch (opcao) {
+        case 1:
+          ProfessorController.listarAlunosPorDisciplina();
+          break;
+      }
+      opcao = view.renderProfessor();
+    }
+  }
+
+  public static void cursoRouter() {
+    int opcao = view.renderCurso();
 
     while (opcao != 0) {
       switch (opcao) {
         case 1:
-          System.out.println("Teste");
+          SecretariaController.cadastrarCurso();
+        case 2:
+          SecretariaController.listarCurso();
+          break;
+        case 3:
+          SecretariaController.removerCurso();
           break;
       }
-      opcao = viewer.menu();
+      opcao = view.renderCurso();
+    }
+  }
+
+  public static void usuarioRouter() {
+    int opcao = view.renderUsuario();
+
+    while (opcao != 0) {
+      switch (opcao) {
+        case 1:
+          SecretariaController.cadastrarUsuario();
+        case 2:
+          SecretariaController.listarUsuario();
+          break;
+        case 3:
+          SecretariaController.removerUsuario();
+          break;
+      }
+      opcao = view.renderUsuario();
+    }
+  }
+
+  public static void curriculoRouter() {
+    int opcao = view.renderCurriculo();
+
+    while (opcao != 0) {
+      switch (opcao) {
+        case 1:
+          SecretariaController.cadastrarCurriculo();
+          break;
+        case 2:
+          SecretariaController.addDisciplinaNoCurriculo();
+          break;
+        case 3:
+          SecretariaController.removerDisciplinaNoCurriculo();
+          break;
+      }
+      opcao = view.renderCurriculo();
     }
   }
 
   public static void secretariaRouter() {
-    SecretariaViewer viewer = new SecretariaViewer();
-    int opcao = viewer.menu();
+    int opcao = view.renderSecretaria();
 
     while (opcao != 0) {
       switch (opcao) {
         case 1:
+          usuarioRouter();
+          break;
         case 2:
-          viewer.listarUsuario();
+          cursoRouter();
           break;
         case 3:
-          viewer.cadastrarCurso();
+          curriculoRouter();
           break;
-        case 4:
-          viewer.listarCursos();
-          break;
+
       }
-      opcao = viewer.menu();
+      opcao = view.renderSecretaria();
     }
   }
 
-  public static void logarRoute() {
-    LogarViewer viewer = new LogarViewer();
-    Usuario usuario = viewer.logar();
-    if (usuario instanceof Professor)
-      professorRouter();
-    if(usuario instanceof Aluno)
-      alunoRouter();
-    if(usuario instanceof Secretaria)
-      secretariaRouter();
-  }
-
-  public static void usuarioRouter() {
-    UsuarioViewer viewer = new UsuarioViewer();
-    int opcao = viewer.menu();
+  public static void home() {
+    int opcao = view.renderHome();
 
     while (opcao != 0) {
       switch (opcao) {
         case 1:
-          logarRoute();
+          Usuario usuario = LoginController.login();
+          if (usuario instanceof Professor)
+            professorRouter();
+          if (usuario instanceof Aluno)
+            alunoRouter();
+          if (usuario instanceof Secretaria)
+            secretariaRouter();
           break;
         case 2:
-          viewer.cadastrarSecretaria();
+          UsuarioController.listarUsuario();
+          break;
+        case 3:
+          UsuarioController.cadastrarSecretaria();
           break;
       }
-        opcao = viewer.menu();
-      }
+      opcao = view.renderHome();
     }
+  }
 
   public static void main(String[] args) {
-    usuarioRouter();
+    view = View.getInstance();
+    home();
   }
 }
